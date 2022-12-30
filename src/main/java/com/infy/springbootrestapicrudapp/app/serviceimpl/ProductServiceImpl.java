@@ -16,9 +16,9 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	ProductRepository pr;
 	
-	public Product saveProduct(Product p)
+	public Product saveProduct(Product product)
 	{
-		return pr.save(p);
+		return pr.save(product);
 	}
 	
 	public Iterable<Product> getProduct()
@@ -26,8 +26,14 @@ public class ProductServiceImpl implements ProductService
 		return pr.findAll();
 	}
 	
-	public void deleteProduct(int pid)
+	public void deleteProduct(int productid)
 	{
-		pr.deleteByProductId(pid);
+		pr.deleteByProductId(productid);
 	}
+	
+	public boolean ExistProduct(int productId)
+	{
+		return pr.existsById(productId);
+	}
+	
 }

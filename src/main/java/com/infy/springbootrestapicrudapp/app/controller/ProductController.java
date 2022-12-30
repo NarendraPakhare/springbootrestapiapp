@@ -1,6 +1,8 @@
 package com.infy.springbootrestapicrudapp.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,28 +23,41 @@ public class ProductController
 	@Autowired
 	ProductService ps;
 	
-	@PostMapping(value = "/saveProduct")
-	public Product saveProduct(@RequestBody Product p)
-	{
+	@PostMapping(value = "/product")
+	public ResponseEntity<Product> saveProduct(@RequestBody Product p)
+	{	
 		Product product = ps.saveProduct(p);
-		return null;
+		return new ResponseEntity<Product>(product, HttpStatus.CREATED );
 	}
 	
-	@GetMapping(value = "/getProduct")
-	public Iterable<Product> getProduct()
+	@GetMapping(value = "/product")
+	public ResponseEntity<Iterable<Product>> getProduct()
 	{
-		return ps.getProduct();
+		Iterable<Product> products = ps.getProduct();
+		return new ResponseEntity<Iterable<Product>>(products, HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/updateProduct")
-	public void updateProduct(@RequestBody Product p)
+	@PutMapping(value = "/product/{productId}")
+	public ResponseEntity<Product> updateProduct(@PathVariable("productId") int productId, @RequestBody Product prod)
 	{
-		ps.saveProduct(p);
+		if(ps.ExistProduct(productId))
+		{
+			Product product = ps.saveProduct(prod);
+			return new ResponseEntity<Product>(product, HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+			
+		}
 	}
 	
-	@DeleteMapping(value = "/deleteProduct/{pid}")
-	public void deleteProduct(@PathVariable("pid") int pid)
+	@DeleteMapping(value = "/product/{pid}")
+	public ResponseEntity<String> deleteProduct(@PathVariable("pid") int pid)
 	{
 		ps.deleteProduct(pid);
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
+	
+	
 }

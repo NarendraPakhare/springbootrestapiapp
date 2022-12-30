@@ -6,5 +6,5 @@ import com.infy.springbootrestapicrudapp.app.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>
 {
-	public void deleteByProductId(int pid);
+	public void deleteByProductId(int productid);
 }

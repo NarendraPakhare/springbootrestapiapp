@@ -1,9 +1,7 @@
 package com.infy.springbootrestapicrudapp.app.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product 
+public class Supplier 
 {
 	@Id
-	private Integer productId;
-	private String productName;
-	private Double productPrice;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Supplier supplier;
+	private Integer supplierId;
+	private String supplierName;
+	private Long supplierContact;
 }
