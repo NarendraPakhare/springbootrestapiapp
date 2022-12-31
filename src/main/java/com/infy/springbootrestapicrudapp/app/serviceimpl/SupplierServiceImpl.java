@@ -1,8 +1,11 @@
 package com.infy.springbootrestapicrudapp.app.serviceimpl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.infy.springbootrestapicrudapp.app.exception.findByIdException;
 import com.infy.springbootrestapicrudapp.app.model.Supplier;
 import com.infy.springbootrestapicrudapp.app.repository.SupplierRepository;
 import com.infy.springbootrestapicrudapp.app.service.SupplierService;
@@ -25,6 +28,15 @@ public class SupplierServiceImpl implements SupplierService
 	
 	public Supplier getSingleSupplier(int supplierId)
 	{
-		return sr.findBySupplierId(supplierId);
+		Optional<Supplier> os = sr.findById(supplierId);
+		if(os.isPresent())
+		{
+			return os.get();
+		}
+		else 
+		{
+			throw new findByIdException("No Supplier with the ID...");
+		}
+		
 	}
 }

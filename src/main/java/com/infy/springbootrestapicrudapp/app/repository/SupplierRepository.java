@@ -7,5 +7,5 @@ import com.infy.springbootrestapicrudapp.app.model.Supplier;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Integer>
 {
-	public Supplier findBySupplierId(int supplierId);
+	
 }

@@ -1,10 +1,13 @@
 package com.infy.springbootrestapicrudapp.app.serviceimpl;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.infy.springbootrestapicrudapp.app.exception.findByIdException;
 import com.infy.springbootrestapicrudapp.app.model.Product;
 import com.infy.springbootrestapicrudapp.app.repository.ProductRepository;
 import com.infy.springbootrestapicrudapp.app.service.ProductService;
@@ -28,7 +31,16 @@ public class ProductServiceImpl implements ProductService
 	
 	public void deleteProduct(int productid)
 	{
-		pr.deleteByProductId(productid);
+		Optional<Product> op = pr.findById(productid);
+		if(op.isPresent())
+		{
+			pr.deleteByProductId(productid);
+		}
+		else
+		{
+			throw new findByIdException("No Product present with the ID...");
+		}
+		
 	}
 	
 	public boolean ExistProduct(int productId)
